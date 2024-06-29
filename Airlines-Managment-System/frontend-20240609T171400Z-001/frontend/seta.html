@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+<title>Flight Seat Booking</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  .flight-front {
+    width: 100%;
+    max-width: 600px; /* Adjust max-width as needed */
+    margin-bottom: 20px;
+  }
+  .seats-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px; /* Adjust max-width as needed */
+  }
+  .seats-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .seat {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: 2px solid #6effb8; /* Neon green outline */
+    margin: 5px;
+    text-align: center;
+    line-height: 30px;
+    color: #6effb8; /* Neon green text */
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease;
+  }
+  .seat.selected {
+    background-color: #6effb8; /* Neon green fill when selected */
+    color: #fff; /* White text when selected */
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="section__container header__container">
+      <h1 class="section__header">Book Your Seat<br>A Great Experience</h1>
+    <img src="/first.jpeg" alt="header">
+</header>
+
+</div>
+
+<section class="section__container booking__container">
+  <div  style="margin:auto">
+  <h5 id="flight">Flight Facing Forwards</h5>
+  <br>  
+
+  </div>
+
+  <div  style="align-items: center; display: flex;">
+  <div class="seats-container" id="seats">
+    <div class="seats-column" id="seats-column">
+      <!-- Seats on the left side, first column -->
+      <!-- Seat numbers will be added dynamically using JavaScript -->
+    </div>
+    <div class="seats-column" id="seats-column">
+      <!-- Seats on the left side, second column -->
+      <!-- Seat numbers will be added dynamically using JavaScript -->
+    </div>
+    <div class="seats-column" id="seats-column">
+      <!-- Seats on the left side, third column -->
+      <!-- Seat numbers will be added dynamically using JavaScript -->
+    </div>
+  </div>
+  <div class="seats-container">
+    <div class="seats-column" id="seats-column">
+      <!-- Seats on the right side, first column -->
+      <!-- Seat numbers will be added dynamically using JavaScript -->
+    </div>
+    <div class="seats-column" id="seats-column">
+      <!-- Seats on the right side, second column -->
+      <!-- Seat numbers will be added dynamically using JavaScript -->
+    </div>
+    <div class="seats-column" id="seats-column">
+      <!-- Seats on the right side, third column -->
+      <!-- Seat numbers will be added dynamically using JavaScript -->
+    </div>
+  </div>
+ </div>
+ 
+   
+</section>
+<button class="btn" id="submit">Submit</button>
+    
+</div>
+<script>
+  document.getElementById("submit").addEventListener('click',(e)=>{
+    e.preventDefault();
+    console.log("hi")
+   fetch("http://localhost:2233/addticket",
+        {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+              flight:localStorage.getItem("flight"),
+              user:localStorage.getItem("user"),
+              seatno:localStorage.getItem("seat")
+  
+            })
+        })
+        .then((res) => res.json())
+            .then((data) => {console.log(data)
+        console.log(data)
+  alert("your ticket has been booked")
+            })
+        .catch(function(res){ console.log(res) })
+      
+  })
+  // Function to create and append seats
+  function createSeats(container, start, end) {
+    for (var i = start; i <= end; i++) {
+      var seat = document.createElement("div");
+      seat.classList.add("seat");
+      seat.textContent = i;
+      seat.addEventListener("click", function() {
+        this.classList.toggle("selected");
+        localStorage.setItem("seat",this.textContent)
+      console.log(allflight.find(item => item.seatno === i))
+        console.log("Seat " + this.textContent + " toggled");
+      });
+      container.appendChild(seat);
+    }
+  }
+
+  // Create seats for left and right sides
+  var leftColumns = document.querySelectorAll('.seats-container')[0].querySelectorAll('.seats-column');
+  var rightColumns = document.querySelectorAll('.seats-container')[1].querySelectorAll('.seats-column');
+
+  // Seats on the left side
+  createSeats(leftColumns[0], 1, 6);
+  createSeats(leftColumns[1], 7, 12);
+  createSeats(leftColumns[2], 13, 18);
+
+  // Seats on the right side
+  createSeats(rightColumns[0], 19, 24);
+  createSeats(rightColumns[1], 25, 30);
+  createSeats(rightColumns[2], 31, 36);
+</script>
+<script src="index.js"></script>
+
+</body>
+</html>

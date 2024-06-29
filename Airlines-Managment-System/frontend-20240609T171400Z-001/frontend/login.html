@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <style>
+        /* Basic styling for input fields */
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter your details</h1>
+    <form id="signup-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+
+        <button type="button" onclick="getValues()">Submit</button>
+    </form>
+
+    <script src="index.js"></script>
+</body>
+</html>
